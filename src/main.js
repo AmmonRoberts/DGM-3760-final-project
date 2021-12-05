@@ -26,18 +26,18 @@ const search = async () => {
                 return response.json();
             })
             .then((data) => {
-                console.log(data)
                 let resultsElement = document.querySelector('#searchResults');
                 resultsElement.innerHTML = "";
                 data.entries.forEach(element => {
+                    console.log(element)
                     let d = document.createElement("div");
                     d.className = "searchResult";
-                    d.setAttribute("bookKey", element.key.slice(7))
-                    d.setAttribute("bookTitle", element.title)
-                    d.setAttribute("bookAuthor", element.author_name)
+                    d.setAttribute("API", element.API)
+                    d.setAttribute("Description", element.Description)
+                    // d.setAttribute("bookAuthor", element.author_name)
                     d.innerHTML =
-                        `<h4>${element.title}</h4>
-                        <p>${element.author_name}</p>
+                        `<h4>${element.API}</h4>
+                        <p>${element.Description}</p>
                       <div class="buttonGroup">
                       <button class="addFavoriteButton addButton">Add to Favorites</button>
                       <button class="addListButton addButton">Save for later</button>

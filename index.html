@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Book Tracker</title>
+  <title>Public API Search</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./styles/styles.css">
@@ -11,16 +11,28 @@
 <body>
   <div id="app">
     <div class="row1 column1">
-      <h1>Book Tracker</h1>
-
+      <h1>Public API Search</h1>
     </div>
 
     <div class="row1 column2">
-      <form role="search" id="form">
-        <input type="search" id="searchText" name="q" placeholder="Search..." aria-label="Search through site content">
+      <form role="search" id="searchBox">
+        <input type="search" id="searchText" class="searchBox" placeholder="Search..." aria-label="Search through site content">
         <button id="search" class="searchButton">
           <i class="fa fa-search" aria-hidden="true"></i>
         </button>
+
+      </form>
+      <form id="searchOptions">
+        <p>Category:</p>
+        <select id="categorySelect" name="categorySelect"></select>
+
+      </form>
+      <form>
+        <p>Search by:</p>
+        <input type="checkbox" id="title" name="title" value="Title">
+        <label for="title">Title</label><br>
+        <input type="checkbox" id="description" name="description" value="Description">
+        <label for="description">Description</label><br>
       </form>
     </div>
 

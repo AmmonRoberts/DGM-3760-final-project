@@ -13,13 +13,33 @@ p {
   margin: 3px 5px 3px 5px;
 }
 
-form {
+#searchBox {
   background-color: #e8f0fe;
   width: 300px;
   height: 44px;
   border-radius: 5px;
   display: flex;
   align-items: center;
+}
+
+#searchOptions {
+  all: unset;
+  font: 14px;
+  width: 300px;
+  padding: 6px 10px;
+  height: 44px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+#searchOptions select {
+  background-color: #e8f0fe;
+  width: inherit;
+  height: 44px;
+  border-radius: 5px;
+  margin: 3px;
+  display: inline-block;
 }
 
 #app {
