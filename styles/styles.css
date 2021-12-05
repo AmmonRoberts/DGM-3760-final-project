@@ -1,0 +1,139 @@
+body {
+  background-image: url("../assets/background.png");
+  background-repeat: no-repeat;
+  font-family: system-ui;
+  font-size: 14px;
+}
+
+h4 {
+  margin: 5px;
+}
+
+p {
+  margin: 3px 5px 3px 5px;
+}
+
+form {
+  background-color: #e8f0fe;
+  width: 300px;
+  height: 44px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(50px, auto);
+}
+
+#searchText {
+  all: unset;
+  font: 14px;
+  width: 300px;
+  padding: 6px 10px;
+}
+
+::placeholder {
+  color: rgb(100, 99, 99);
+  opacity: 0.6;
+}
+
+.buttonGroup {
+  margin: 10px;
+}
+
+.buttonGroup .addButton {
+  display: inline;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
+  border: 1px solid green;
+}
+
+.buttonGroup .addButton:hover {
+  background-color: #3e8e41;
+}
+
+.searchResult {
+  border-bottom: 1px solid black;
+  padding: 5px;
+
+}
+
+.searchButton {
+  all: unset;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+}
+
+#searchResults {
+  margin: 1rem;
+  overflow: auto;
+  width: 500px;
+  height: 500px;
+  background-color: #e8f0fe;
+}
+
+.accordionButtons {
+  grid-column: 2;
+}
+
+.accordion {
+  background-color: #e8f0fe;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 70vh;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 14px;
+  transition: 0.4s;
+  margin: 0;
+
+}
+
+.active,
+.accordion:hover {
+  background-color: #cad3e2;
+  margin: 1rem 0 1rem 0;
+}
+
+.panel {
+  display: none;
+  margin-bottom: 1rem;
+  overflow: auto;
+  height: 30vh;
+  background-color: #e8f0fe;
+  width: 70vh;
+}
+
+.row1 {
+  grid-row: 1;
+
+}
+
+.row2 {
+  grid-row: 2;
+
+}
+
+.column1 {
+  grid-column: 1;
+
+}
+
+.column2 {
+  grid-column: 2;
+
+}

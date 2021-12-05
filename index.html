@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Book Tracker</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./styles/styles.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="row1 column1">
+      <h1>Book Tracker</h1>
+
+    </div>
+
+    <div class="row1 column2">
+      <form role="search" id="form">
+        <input type="search" id="searchText" name="q" placeholder="Search..." aria-label="Search through site content">
+        <button id="search" class="searchButton">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+
+
+    <div class="row2 column1">
+      <h3>Search Results</h3>
+
+
+      <div id="searchResults"></div>
+    </div>
+
+    <div class="row2 column2">
+
+      <div class="accordionButtons">
+        <button class="accordion">My Favorites</button>
+        <div id="favorites" class="panel"></div>
+
+        <button class="accordion">My Reading List</button>
+        <div id="saved" class="panel"></div>
+      </div>
+    </div>
+
+  </div>
+  <script src="./src/main.js" type="module"></script>
+</body>
+
+</html>
