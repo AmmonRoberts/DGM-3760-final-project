@@ -194,7 +194,7 @@ const addToList = async (book) => {
         })
 }
 
-const getAllBooks = async () => {
+const getAllLists = async () => {
     savedArray = []
     favoritesArray = []
 
@@ -252,4 +252,4 @@ const getAllBooks = async () => {
 
         })
 }
-getAllBooks()
+getAllLists()

@@ -44,9 +44,10 @@ p {
 
 #app {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(50px, auto);
+  grid-gap: 10px;
+  grid-template-areas:
+    "header header header"
+    "sidebar content content";
 }
 
 #searchText {
@@ -99,13 +100,9 @@ p {
 #searchResults {
   margin: 1rem;
   overflow: auto;
-  width: 500px;
-  height: 500px;
+  width: 1000px;
+  height: 600px;
   background-color: #e8f0fe;
-}
-
-.accordionButtons {
-  grid-column: 2;
 }
 
 .accordion {
@@ -113,13 +110,14 @@ p {
   color: #444;
   cursor: pointer;
   padding: 18px;
-  width: 70vh;
+  width: 90%;
   border: none;
   text-align: left;
   outline: none;
   font-size: 14px;
   transition: 0.4s;
-  margin: 0;
+  margin: 1px;
+  border-radius: 5px;
 
 }
 
@@ -135,25 +133,19 @@ p {
   overflow: auto;
   height: 30vh;
   background-color: #e8f0fe;
-  width: 70vh;
+  width: 90%;
 }
 
-.row1 {
-  grid-row: 1;
-
-}
-
-.row2 {
-  grid-row: 2;
+.header {
+  grid-area: header;
 
 }
 
-.column1 {
-  grid-column: 1;
-
+.content {
+  grid-area: content;
 }
 
-.column2 {
-  grid-column: 2;
+.sidebar {
+  grid-area: sidebar;
 
 }

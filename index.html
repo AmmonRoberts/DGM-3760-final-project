@@ -10,11 +10,11 @@
 
 <body>
   <div id="app">
-    <div class="row1 column1">
+    <div class="header">
       <h1>Public API Search</h1>
     </div>
 
-    <div class="row1 column2">
+    <div class="sidebar">
       <form role="search" id="searchBox">
         <input type="search" id="searchText" class="searchBox" placeholder="Search..." aria-label="Search through site content">
         <button id="search" class="searchButton">
@@ -34,18 +34,7 @@
         <input type="checkbox" id="description" name="description" value="Description">
         <label for="description">Description</label><br>
       </form>
-    </div>
-
-
-    <div class="row2 column1">
-      <h3>Search Results</h3>
-
-
-      <div id="searchResults"></div>
-    </div>
-
-    <div class="row2 column2">
-
+      <br>
       <div class="accordionButtons">
         <button class="accordion">My Favorites</button>
         <div id="favorites" class="panel"></div>
@@ -53,6 +42,12 @@
         <button class="accordion">My Reading List</button>
         <div id="saved" class="panel"></div>
       </div>
+    </div>
+
+
+    <div class="content">
+      <h3>Search Results</h3>
+      <div id="searchResults"></div>
     </div>
 
   </div>
