@@ -1,7 +1,7 @@
 let favoritesArray = [];
 let savedArray = [];
 
-let url = "http://localhost:3000/lists";
+let url = "https://dgm-3760-final-project-backend.herokuapp.com/lists";
 
 let accordion = document.querySelectorAll(".accordion");
 
@@ -126,53 +126,7 @@ const search = async () => {
 
                     resultsElement.appendChild(d)
                 });
-            }).then(
-                (data) => {
-                    let favorites = document.querySelector("#favorites");
-                    let saved = document.querySelector("#saved");
-
-                    // document.querySelectorAll(".addFavoriteButton").forEach((addFavoriteButton) => {
-                    //     addFavoriteButton.addEventListener('click', (event) => {
-                    //         let buttonParent = event.target.parentElement.parentElement
-                    //         let apiName = buttonParent.getAttribute("API");
-                    //         let apiDescription = buttonParent.getAttribute("Description");
-
-
-                    //         if (!favoritesArray.find((element) =>
-                    //             element.name === apiName)) {
-                    //             console.log(element)
-                    //             let apiObject = {
-                    //                 "API": element.API,
-                    //                 "Description": element.Description,
-                    //                 "HTTPS": element.HTTPS,
-                    //                 "Cors": element.Cors,
-                    //                 "Link": element.Link,
-                    //                 "Category": element.Category,
-                    //                 "saved": false,
-                    //                 "favoriteList": true,
-                    //             }
-                    //             favoritesArray.push(apiObject)
-                    //             addToList(apiObject)
-
-                    //             let d = document.createElement("div");
-                    //             d.className = "searchResult";
-                    //             d.setAttribute("API", apiName)
-                    //             d.innerHTML = `
-                    //                 <h4>${apiObject.CategoryAPI}</h4>
-                    //                 <p>${apiObject.Description}</p>
-                    //                 `;
-                    //             favorites.appendChild(d);
-                    //         }
-                    //     })
-                    // })
-
-
-                    // document.querySelectorAll(".addListButton").forEach((addListButton) => {
-                    //     addListButton
-                    // })
-
-                }
-            )
+            })
             .catch((err) => {
                 console.log('Something went wrong!', err);
                 alert('Please double check your search query!');
@@ -194,7 +148,7 @@ document.querySelector(`#searchText`).addEventListener('keypress', (event) => {
 
 
 const addToList = async (api) => {
-    await fetch(`${url}${api.key}`)
+    await fetch(`${url}/${api.Link}`)
         .then(async (response) => {
             if (response.ok) {
                 let responseJson = await response.json()
@@ -207,16 +161,19 @@ const addToList = async (api) => {
                 }
 
                 // let responseJson = response.json()
-                await fetch(`${url}${api.key}`,
+                await fetch(`${url}/${api.Link}`,
                     {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            bookName: api.title,
-                            authorName: api.author,
-                            bookKey: api.key,
+                            API: api.API,
+                            Description: api.Description,
+                            HTTPS: api.HTTPS,
+                            Category: api.Category,
+                            Cors: api.Cors,
+                            Link: api.Link,
                             saved: api.saved,
                             favoriteList: api.favoriteList,
                         })
@@ -234,9 +191,12 @@ const addToList = async (api) => {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            bookName: api.title,
-                            authorName: api.author,
-                            bookKey: api.key,
+                            API: api.API,
+                            Description: api.Description,
+                            HTTPS: api.HTTPS,
+                            Category: api.Category,
+                            Cors: api.Cors,
+                            Link: api.Link,
                             saved: api.saved,
                             favoriteList: api.favoriteList,
                         })
@@ -244,6 +204,23 @@ const addToList = async (api) => {
             }
         })
 }
+
+const getAllCategories = async () => {
+    await fetch(`${url}/categories`)
+        .then(async (data) => {
+            let categorySelect = document.querySelector("#categorySelect")
+
+            let responseCategories = await data.json()
+
+            responseCategories.forEach((element) => {
+                var option = document.createElement("option");
+                option.value = element;
+                option.text = element;
+                categorySelect.appendChild(option);
+            })
+        });
+}
+
 
 const getAllLists = async () => {
     savedArray = []
@@ -303,4 +280,5 @@ const getAllLists = async () => {
 
         })
 }
+getAllCategories()
 getAllLists()
