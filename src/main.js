@@ -1,5 +1,6 @@
 let favoritesArray = [];
 let savedArray = [];
+let selectedCategory = "";
 
 let url = "https://dgm-3760-final-project-backend.herokuapp.com/lists";
 
@@ -21,111 +22,12 @@ for (let i = 0; i < accordion.length; i++) {
 const search = async () => {
     let query = document.querySelector('#searchText').value;
     if (query != '') {
-        fetch(`${url}/entries?title=${query}`)
+        fetch(`${url}/entries?title=${query}&category=${selectedCategory}`)
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                let resultsElement = document.querySelector('#searchResults');
-                resultsElement.innerHTML = "";
-                data.entries.forEach(element => {
-                    console.log(element)
-                    let d = document.createElement("div");
-                    d.className = "searchResult";
-                    d.setAttribute("API", element.API)
-                    d.setAttribute("Description", element.Description)
-
-                    let faveButton = document.createElement("button");
-                    faveButton.classList.add("addFavoriteButton");
-                    faveButton.classList.add("addButton");
-                    faveButton.innerText = "Add to Favorites";
-                    faveButton.addEventListener('click', (event) => {
-                        let buttonParent = event.target.parentElement.parentElement
-                        let apiName = buttonParent.getAttribute("API");
-                        let apiDescription = buttonParent.getAttribute("Description");
-
-                        console.log(event.target)
-                        if (!favoritesArray.find((listElement) =>
-                            listElement.Link === element.Link)) {
-                            console.log(element)
-                            let apiObject = {
-                                "API": element.API,
-                                "Description": element.Description,
-                                "HTTPS": element.HTTPS,
-                                "Cors": element.Cors,
-                                "Link": element.Link,
-                                "Category": element.Category,
-                                "saved": false,
-                                "favoriteList": true,
-                            }
-                            favoritesArray.push(apiObject)
-                            addToList(apiObject)
-
-                            let d = document.createElement("div");
-                            d.className = "searchResult";
-                            d.setAttribute("API", apiName)
-                            d.innerHTML = `
-                                <h4>${apiObject.API}</h4>
-                                <p>${apiObject.Description}</p>
-                                <a href="${apiObject.Link}">${apiObject.Link}</a>`;
-                            favorites.appendChild(d);
-                        }
-                    })
-
-
-                    let saveListButton = document.createElement("button");
-                    saveListButton.classList.add("addListButton");
-                    saveListButton.classList.add("addButton");
-                    saveListButton.innerText = "Save for later";
-                    saveListButton.addEventListener('click', (event) => {
-                        let buttonParent = event.target.parentElement.parentElement
-                        let apiName = buttonParent.getAttribute("API");
-                        let apiDescription = buttonParent.getAttribute("Description");
-
-                        console.log(savedArray)
-                        if (!savedArray.find((listElement
-                        ) => listElement.Link === element.Link)) {
-
-                            let apiObject = {
-                                "API": element.API,
-                                "Description": element.Description,
-                                "HTTPS": element.HTTPS,
-                                "Cors": element.Cors,
-                                "Link": element.Link,
-                                "Category": element.Category,
-                                "saved": false,
-                                "favoriteList": true,
-                            }
-                            savedArray.push(apiObject)
-                            addToList(apiObject)
-
-                            let d = document.createElement("div");
-                            d.className = "searchResult";
-                            d.setAttribute("API", apiName)
-                            d.innerHTML = `
-                            <h4>${apiObject.API}</h4>
-                            <p>${apiObject.Description}</p>
-                            <a href="${apiObject.Link}">${apiObject.Link}</a>`;
-                            saved.appendChild(d);
-                        }
-                    })
-
-
-                    let buttonGroup = document.createElement("div");
-                    buttonGroup.className = "buttonGroup";
-                    buttonGroup.appendChild(faveButton);
-                    buttonGroup.appendChild(saveListButton);
-
-                    d.innerHTML =
-                        `<h4>${element.API}</h4>
-                         <p>${element.Description}</p>
-                         <a href="${element.Link}">${element.Link}</a>
-                         `
-
-                    d.appendChild(buttonGroup)
-
-                    resultsElement.appendChild(d)
-                });
+                makeButtons(data);
             })
             .catch((err) => {
                 console.log('Something went wrong!', err);
@@ -205,6 +107,108 @@ const addToList = async (api) => {
         })
 }
 
+
+const makeButtons = (data) => {
+    {
+        let resultsElement = document.querySelector('#searchResults');
+        resultsElement.innerHTML = "";
+        if (data.entries) {
+            data.entries.forEach(element => {
+                let d = document.createElement("div");
+                d.className = "searchResult";
+                d.setAttribute("API", element.API)
+                d.setAttribute("Description", element.Description)
+
+                let faveButton = document.createElement("button");
+                faveButton.classList.add("addFavoriteButton");
+                faveButton.classList.add("addButton");
+                faveButton.innerText = "Add to Favorites";
+                faveButton.addEventListener('click', (event) => {
+                    if (!favoritesArray.find((listElement) =>
+                        listElement.Link === element.Link)) {
+                        let apiObject = {
+                            "API": element.API,
+                            "Description": element.Description,
+                            "HTTPS": element.HTTPS,
+                            "Cors": element.Cors,
+                            "Link": element.Link,
+                            "Category": element.Category,
+                            "saved": false,
+                            "favoriteList": true,
+                        }
+                        favoritesArray.push(apiObject)
+                        addToList(apiObject)
+
+                        let d = document.createElement("div");
+                        d.className = "searchResult";
+                        d.setAttribute("API", element.API)
+                        d.innerHTML = `
+                            <h4>${apiObject.API}</h4>
+                            <p>${apiObject.Description}</p>
+                            <a href="${apiObject.Link}">${apiObject.Link}</a>
+                        `;
+                        favorites.appendChild(d);
+                    }
+                })
+
+
+                let saveListButton = document.createElement("button");
+                saveListButton.classList.add("addListButton");
+                saveListButton.classList.add("addButton");
+                saveListButton.innerText = "Save for later";
+                saveListButton.addEventListener('click', (event) => {
+
+                    if (!savedArray.find((listElement
+                    ) => listElement.Link === element.Link)) {
+
+                        let apiObject = {
+                            "API": element.API,
+                            "Description": element.Description,
+                            "HTTPS": element.HTTPS,
+                            "Cors": element.Cors,
+                            "Link": element.Link,
+                            "Category": element.Category,
+                            "saved": false,
+                            "favoriteList": true,
+                        }
+                        savedArray.push(apiObject)
+                        addToList(apiObject)
+
+                        let d = document.createElement("div");
+                        d.className = "searchResult";
+                        d.setAttribute("API", element.API)
+                        d.innerHTML = `
+                            <h4>${apiObject.API}</h4>
+                            <p>${apiObject.Description}</p>
+                            <a href="${apiObject.Link}">${apiObject.Link}</a>
+                        `;
+                        saved.appendChild(d);
+                    }
+                })
+
+
+                let buttonGroup = document.createElement("div");
+                buttonGroup.className = "buttonGroup";
+                buttonGroup.appendChild(faveButton);
+                buttonGroup.appendChild(saveListButton);
+
+                d.innerHTML =
+                    `<h4>${element.API}</h4>
+                 <p>${element.Description}</p>
+                 <a href="${element.Link}">${element.Link}</a>
+                 `
+
+                d.appendChild(buttonGroup)
+
+                resultsElement.appendChild(d)
+            });
+        }
+        else {
+            resultsElement.innerHTML = "<p>Couldn't find anything with that request!</p>";
+        }
+    }
+}
+
 const getAllCategories = async () => {
     await fetch(`${url}/categories`)
         .then(async (data) => {
@@ -220,6 +224,14 @@ const getAllCategories = async () => {
             })
         });
 }
+
+const getRandom = async () => {
+    await fetch(`${url}/random?category=${selectedCategory}`)
+        .then(async (data) => {
+            makeButtons(await data.json())
+        });
+}
+document.querySelector("#getRandom").addEventListener("click", getRandom)
 
 
 const getAllLists = async () => {
@@ -280,5 +292,12 @@ const getAllLists = async () => {
 
         })
 }
+
+let categorySelectElement = document.querySelector("#categorySelect")
+
+categorySelectElement.addEventListener("change", (event) => {
+    selectedCategory = event.target.value
+})
+
 getAllCategories()
 getAllLists()

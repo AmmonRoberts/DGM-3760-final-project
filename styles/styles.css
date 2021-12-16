@@ -68,6 +68,8 @@ p {
 
 .addButton {
   margin: 0 5px 0 5px;
+  border-radius: 5px;
+
 }
 
 .buttonGroup .addButton {
