@@ -66,6 +66,10 @@ p {
   margin: 10px;
 }
 
+.addButton {
+  margin: 0 5px 0 5px;
+}
+
 .buttonGroup .addButton {
   display: inline;
   background-color: #4CAF50;

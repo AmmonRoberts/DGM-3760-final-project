@@ -34,16 +34,96 @@ const search = async () => {
                     d.className = "searchResult";
                     d.setAttribute("API", element.API)
                     d.setAttribute("Description", element.Description)
-                    // d.setAttribute("bookAuthor", element.author_name)
+
+                    let faveButton = document.createElement("button");
+                    faveButton.classList.add("addFavoriteButton");
+                    faveButton.classList.add("addButton");
+                    faveButton.innerText = "Add to Favorites";
+                    faveButton.addEventListener('click', (event) => {
+                        let buttonParent = event.target.parentElement.parentElement
+                        let apiName = buttonParent.getAttribute("API");
+                        let apiDescription = buttonParent.getAttribute("Description");
+
+                        console.log(event.target)
+                        if (!favoritesArray.find((listElement) =>
+                            listElement.Link === element.Link)) {
+                            console.log(element)
+                            let apiObject = {
+                                "API": element.API,
+                                "Description": element.Description,
+                                "HTTPS": element.HTTPS,
+                                "Cors": element.Cors,
+                                "Link": element.Link,
+                                "Category": element.Category,
+                                "saved": false,
+                                "favoriteList": true,
+                            }
+                            favoritesArray.push(apiObject)
+                            addToList(apiObject)
+
+                            let d = document.createElement("div");
+                            d.className = "searchResult";
+                            d.setAttribute("API", apiName)
+                            d.innerHTML = `
+                                <h4>${apiObject.API}</h4>
+                                <p>${apiObject.Description}</p>
+                                <a href="${apiObject.Link}">${apiObject.Link}</a>`;
+                            favorites.appendChild(d);
+                        }
+                    })
+
+
+                    let saveListButton = document.createElement("button");
+                    saveListButton.classList.add("addListButton");
+                    saveListButton.classList.add("addButton");
+                    saveListButton.innerText = "Save for later";
+                    saveListButton.addEventListener('click', (event) => {
+                        let buttonParent = event.target.parentElement.parentElement
+                        let apiName = buttonParent.getAttribute("API");
+                        let apiDescription = buttonParent.getAttribute("Description");
+
+                        console.log(savedArray)
+                        if (!savedArray.find((listElement
+                        ) => listElement.Link === element.Link)) {
+
+                            let apiObject = {
+                                "API": element.API,
+                                "Description": element.Description,
+                                "HTTPS": element.HTTPS,
+                                "Cors": element.Cors,
+                                "Link": element.Link,
+                                "Category": element.Category,
+                                "saved": false,
+                                "favoriteList": true,
+                            }
+                            savedArray.push(apiObject)
+                            addToList(apiObject)
+
+                            let d = document.createElement("div");
+                            d.className = "searchResult";
+                            d.setAttribute("API", apiName)
+                            d.innerHTML = `
+                            <h4>${apiObject.API}</h4>
+                            <p>${apiObject.Description}</p>
+                            <a href="${apiObject.Link}">${apiObject.Link}</a>`;
+                            saved.appendChild(d);
+                        }
+                    })
+
+
+                    let buttonGroup = document.createElement("div");
+                    buttonGroup.className = "buttonGroup";
+                    buttonGroup.appendChild(faveButton);
+                    buttonGroup.appendChild(saveListButton);
+
                     d.innerHTML =
                         `<h4>${element.API}</h4>
-                        <p>${element.Description}</p>
-                      <div class="buttonGroup">
-                      <button class="addFavoriteButton addButton">Add to Favorites</button>
-                      <button class="addListButton addButton">Save for later</button>
-                      </div>
-                        </div>
-                `
+                         <p>${element.Description}</p>
+                         <a href="${element.Link}">${element.Link}</a>
+                         `
+
+                    d.appendChild(buttonGroup)
+
                     resultsElement.appendChild(d)
                 });
             }).then(
@@ -51,74 +131,45 @@ const search = async () => {
                     let favorites = document.querySelector("#favorites");
                     let saved = document.querySelector("#saved");
 
-                    document.querySelectorAll(".addFavoriteButton").forEach((element) => {
-                        element.addEventListener('click', (event) => {
-                            let element = event.target.parentElement.parentElement
-                            let bookKey = element.getAttribute("bookKey");
-                            let bookTitle = element.getAttribute("bookTitle");
-                            let bookAuthor = element.getAttribute("bookAuthor");
+                    // document.querySelectorAll(".addFavoriteButton").forEach((addFavoriteButton) => {
+                    //     addFavoriteButton.addEventListener('click', (event) => {
+                    //         let buttonParent = event.target.parentElement.parentElement
+                    //         let apiName = buttonParent.getAttribute("API");
+                    //         let apiDescription = buttonParent.getAttribute("Description");
 
 
-                            if (!favoritesArray.find(({
-                                key
-                            }) => key === bookKey)) {
+                    //         if (!favoritesArray.find((element) =>
+                    //             element.name === apiName)) {
+                    //             console.log(element)
+                    //             let apiObject = {
+                    //                 "API": element.API,
+                    //                 "Description": element.Description,
+                    //                 "HTTPS": element.HTTPS,
+                    //                 "Cors": element.Cors,
+                    //                 "Link": element.Link,
+                    //                 "Category": element.Category,
+                    //                 "saved": false,
+                    //                 "favoriteList": true,
+                    //             }
+                    //             favoritesArray.push(apiObject)
+                    //             addToList(apiObject)
 
-                                let bookObject = {
-                                    "key": bookKey,
-                                    "title": bookTitle,
-                                    "author": bookAuthor,
-                                    "saved": false,
-                                    "favoriteList": true,
-                                }
-                                favoritesArray.push(bookObject)
-                                addToList(bookObject)
-
-                                let d = document.createElement("div");
-                                d.className = "searchResult";
-                                d.setAttribute("key", bookKey)
-                                d.innerHTML = `
-                                    <h4>${bookTitle}</h4>
-                                    <p>${bookAuthor}</p>
-                                    `;
-                                favorites.appendChild(d);
-                            }
-                        })
-                    })
+                    //             let d = document.createElement("div");
+                    //             d.className = "searchResult";
+                    //             d.setAttribute("API", apiName)
+                    //             d.innerHTML = `
+                    //                 <h4>${apiObject.CategoryAPI}</h4>
+                    //                 <p>${apiObject.Description}</p>
+                    //                 `;
+                    //             favorites.appendChild(d);
+                    //         }
+                    //     })
+                    // })
 
 
-                    document.querySelectorAll(".addListButton").forEach((element) => {
-                        element.addEventListener('click', (event) => {
-                            let element = event.target.parentElement.parentElement
-                            let bookKey = element.getAttribute("bookKey");
-                            let bookTitle = element.getAttribute("bookTitle");
-                            let bookAuthor = element.getAttribute("bookAuthor");
-
-                            if (!savedArray.find(({
-                                key
-                            }) => key === bookKey)) {
-
-                                let bookObject = {
-                                    "key": bookKey,
-                                    "title": bookTitle,
-                                    "author": bookAuthor,
-                                    "saved": true,
-                                    "favoriteList": false,
-                                }
-                                favoritesArray.push(bookObject)
-                                addToList(bookObject)
-
-                                let d = document.createElement("div");
-                                d.className = "searchResult";
-                                d.setAttribute("key", bookKey)
-                                d.innerHTML = `
-                                        <h4>${bookTitle}</h4>
-                                        <p>${bookAuthor}</p>
-                                        
-                                        `;
-                                saved.appendChild(d);
-                            }
-                        })
-                    })
+                    // document.querySelectorAll(".addListButton").forEach((addListButton) => {
+                    //     addListButton
+                    // })
 
                 }
             )
@@ -142,32 +193,32 @@ document.querySelector(`#searchText`).addEventListener('keypress', (event) => {
 })
 
 
-const addToList = async (book) => {
-    await fetch(`${url}${book.key}`)
+const addToList = async (api) => {
+    await fetch(`${url}${api.key}`)
         .then(async (response) => {
             if (response.ok) {
                 let responseJson = await response.json()
 
                 if (responseJson.saved === "true") {
-                    book.saved = true
+                    api.saved = true
                 }
                 if (responseJson.favoriteList === "true") {
-                    book.favoriteList = true
+                    api.favoriteList = true
                 }
 
                 // let responseJson = response.json()
-                await fetch(`${url}${book.key}`,
+                await fetch(`${url}${api.key}`,
                     {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            bookName: book.title,
-                            authorName: book.author,
-                            bookKey: book.key,
-                            saved: book.saved,
-                            favoriteList: book.favoriteList,
+                            bookName: api.title,
+                            authorName: api.author,
+                            bookKey: api.key,
+                            saved: api.saved,
+                            favoriteList: api.favoriteList,
                         })
                     }
 
@@ -183,11 +234,11 @@ const addToList = async (book) => {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            bookName: book.title,
-                            authorName: book.author,
-                            bookKey: book.key,
-                            saved: book.saved,
-                            favoriteList: book.favoriteList,
+                            bookName: api.title,
+                            authorName: api.author,
+                            bookKey: api.key,
+                            saved: api.saved,
+                            favoriteList: api.favoriteList,
                         })
                     })
             }
