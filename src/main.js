@@ -3,6 +3,7 @@ let savedArray = [];
 let selectedCategory = "";
 
 let url = "https://dgm-3760-final-project-backend.herokuapp.com/lists";
+// let url = "http://localhost:3000/lists";
 
 let accordion = document.querySelectorAll(".accordion");
 
@@ -50,10 +51,12 @@ document.querySelector(`#searchText`).addEventListener('keypress', (event) => {
 
 
 const addToList = async (api) => {
-    await fetch(`${url}/${api.Link}`)
+    await fetch(`${url}?link=${api.Link}`)
         .then(async (response) => {
+            console.log(api)
             if (response.ok) {
                 let responseJson = await response.json()
+                console.log(responseJson)
 
                 if (responseJson.saved === "true") {
                     api.saved = true
@@ -74,18 +77,17 @@ const addToList = async (api) => {
                             Description: api.Description,
                             HTTPS: api.HTTPS,
                             Category: api.Category,
+                            Auth: api.Auth,
                             Cors: api.Cors,
                             Link: api.Link,
                             saved: api.saved,
                             favoriteList: api.favoriteList,
                         })
                     }
-
-
-
                 )
             }
             else {
+                console.log(api)
                 await fetch(`${url}`,
                     {
                         method: 'POST',
@@ -97,6 +99,7 @@ const addToList = async (api) => {
                             Description: api.Description,
                             HTTPS: api.HTTPS,
                             Category: api.Category,
+                            Auth: api.Auth,
                             Cors: api.Cors,
                             Link: api.Link,
                             saved: api.saved,
@@ -131,6 +134,7 @@ const makeButtons = (data) => {
                             "Description": element.Description,
                             "HTTPS": element.HTTPS,
                             "Cors": element.Cors,
+                            "Auth": element.Auth,
                             "Link": element.Link,
                             "Category": element.Category,
                             "saved": false,
@@ -166,6 +170,7 @@ const makeButtons = (data) => {
                             "Description": element.Description,
                             "HTTPS": element.HTTPS,
                             "Cors": element.Cors,
+                            "Auth": element.Auth,
                             "Link": element.Link,
                             "Category": element.Category,
                             "saved": false,
@@ -235,6 +240,7 @@ document.querySelector("#getRandom").addEventListener("click", getRandom)
 
 
 const getAllLists = async () => {
+    // Still needs to be updated
     savedArray = []
     favoritesArray = []
 
