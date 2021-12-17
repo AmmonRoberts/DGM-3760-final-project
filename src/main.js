@@ -2,8 +2,8 @@ let favoritesArray = [];
 let savedArray = [];
 let selectedCategory = "";
 
-// let url = "https://dgm-3760-final-project-backend.herokuapp.com/lists";
-let url = "http://localhost:3000/lists";
+let url = "https://dgm-3760-final-project-backend.herokuapp.com/lists";
+// let url = "http://localhost:3000/lists";
 
 let accordion = document.querySelectorAll(".accordion");
 
