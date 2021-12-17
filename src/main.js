@@ -2,8 +2,8 @@ let favoritesArray = [];
 let savedArray = [];
 let selectedCategory = "";
 
-let url = "https://dgm-3760-final-project-backend.herokuapp.com/lists";
-// let url = "http://localhost:3000/lists";
+// let url = "https://dgm-3760-final-project-backend.herokuapp.com/lists";
+let url = "http://localhost:3000/lists";
 
 let accordion = document.querySelectorAll(".accordion");
 
@@ -50,13 +50,13 @@ document.querySelector(`#searchText`).addEventListener('keypress', (event) => {
 })
 
 
-const addToList = async (api) => {
-    await fetch(`${url}?link=${api.Link}`)
+const addToList = (api) => {
+    fetch(`${url}?link=${api.Link}`)
         .then(async (response) => {
-            console.log(api)
+            // console.log(api)
             if (response.ok) {
                 let responseJson = await response.json()
-                console.log(responseJson)
+                // console.log(responseJson)
 
                 if (responseJson.saved === "true") {
                     api.saved = true
@@ -66,7 +66,7 @@ const addToList = async (api) => {
                 }
 
                 // let responseJson = response.json()
-                await fetch(`${url}/${api.Link}`,
+                fetch(`${url}?link=${api.Link}`,
                     {
                         method: 'PUT',
                         headers: {
@@ -87,8 +87,8 @@ const addToList = async (api) => {
                 )
             }
             else {
-                console.log(api)
-                await fetch(`${url}`,
+                // console.log(api)
+                fetch(`${url}`,
                     {
                         method: 'POST',
                         headers: {
@@ -105,6 +105,9 @@ const addToList = async (api) => {
                             saved: api.saved,
                             favoriteList: api.favoriteList,
                         })
+                    })
+                    .catch((error) => {
+                        console.log(error)
                     })
             }
         })
